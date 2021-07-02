@@ -113,9 +113,22 @@ const getRandomPhraseAsArray = arr => {
     let randomPhrase = Math.floor(Math.random() * arr.length);
     //this chooses one phrase from the array
     let choosePhrase = arr[randomPhrase];
-    //this splits that phrase into a new array of just letters
-    let splitPhrase = choosePhrase.split(" ");
+    //this splits that phrase into a new array of letters/spaces
+    let splitPhrase = choosePhrase.split("");
     return splitPhrase;
 }
 
-console.log(getRandomPhraseAsArray(phrases));
+const addPhraseToDisplay = arr => {
+    return arr.forEach(item => {
+        let ul = phrase.firstElementChild;
+        let li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+        if (item !== " ") {
+            li.className = "letter";
+        }
+
+    });
+}
+const phraseArray = getRandomPhraseAsArray(phrases);
+addPhraseToDisplay(phraseArray);
