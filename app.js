@@ -56,7 +56,7 @@
 //if a match wasn't found, the function should return null
 
 //step 7- Add an event listener to the keyboard
-//Use event delegation to listen only to button events (keyup) from the 
+//Use event delegation to listen only to button events (click) from the 
 //keyboard. When a player chooses a letter, add the “chosen” class 
 //to that button so the same letter can’t be chosen twice. Note that
 // button elements have an attribute you can set called “disabled” that
@@ -90,8 +90,10 @@
 
 //querySelector <--copy/paste
 
-const qwerty = document.getElementById("qwerty");
+const keyboard = document.getElementById("qwerty");
 const phrase = document.getElementById("phrase");
+const letters = document.querySelectorAll('.letter');
+const misses = document.querySelectorAll('.misses');
 const displayStartScreen = document.getElementById("overlay");
 
 let missed = 0;
@@ -126,9 +128,48 @@ const addPhraseToDisplay = arr => {
         ul.appendChild(li);
         if (item !== " ") {
             li.className = "letter";
+        } else {
+            li.className = "space";
         }
-
     });
 }
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
+
+const checkLetter = (button) => {
+    const li = document.querySelectorAll("#phrase li");
+    let match = null;
+    for (let i = 0; i < letters.length; i++) {
+
+        if (button === li[i].textContent.toLowerCase()) {
+            li[i].classList.add("show");
+            match = button.textContent;
+        }
+        return match;
+    };
+}
+
+keyboard.addEventListener('click', (e) => {
+
+    //if you're pressing a button
+    if (e.target.tagname === "BUTTON") {
+        if (button.className !== "chosen") {
+            // let letterFound = checkLetter(e.target.textContent.toLowerCase());
+            e.target.className = "chosen";
+            e.target.disabled = true;
+            const letterFound = checkLetter(e.target.textContent.toLowerCase());
+        }
+        if (letterFound === null) {
+            let scoreboard = document.querySelector("#scoreboard ol");
+            let li = scoreboard.querySelector("li");
+            scoreboard.removeChild(li);
+            missed++;
+            // misses.textContent = missed;
+
+        }
+
+    });
+
+
+
+
