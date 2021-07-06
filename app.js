@@ -93,7 +93,7 @@
 const keyboard = document.getElementById("qwerty");
 const phrase = document.getElementById("phrase");
 const letters = document.querySelectorAll('.letter');
-const misses = document.querySelectorAll('.misses');
+const scoreboard = document.querySelectorAll('#scoreboard .tries');
 const displayStartScreen = document.getElementById("overlay");
 
 let missed = 0;
@@ -135,41 +135,60 @@ const addPhraseToDisplay = arr => {
 }
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
+let lis = document.querySelectorAll("#phrase li");
 
 const checkLetter = (button) => {
-    const li = document.querySelectorAll("#phrase li");
-    let match = null;
-    for (let i = 0; i < letters.length; i++) {
 
-        if (button === li[i].textContent.toLowerCase()) {
-            li[i].classList.add("show");
+    let match = null;
+    for (let i = 0; i < lis.length; i++) {
+
+        if (button === lis[i].textContent.toLowerCase()) {
+            lis[i].classList.add("show");
             match = button.textContent;
         }
-        return match;
-    };
+
+    }
+    return match;
 }
 
 keyboard.addEventListener('click', (e) => {
 
     //if you're pressing a button
-    if (e.target.tagname === "BUTTON") {
-        if (button.className !== "chosen") {
+    if (e.target.tagName === "BUTTON") {
+        const letterFound = checkLetter(e.target.textContent.toLowerCase());
+        if (e.target.className !== "chosen") {
             // let letterFound = checkLetter(e.target.textContent.toLowerCase());
             e.target.className = "chosen";
-            e.target.disabled = true;
-            const letterFound = checkLetter(e.target.textContent.toLowerCase());
-        }
-        if (letterFound === null) {
+            //e.target.disabled = true;
+
+        } if (letterFound === null) {
             let scoreboard = document.querySelector("#scoreboard ol");
             let li = scoreboard.querySelector("li");
             scoreboard.removeChild(li);
             missed++;
             // misses.textContent = missed;
-
         }
+    }
+    checkWin();
+});
 
-    });
+const checkWin = () => {
+    //const displayWinScreen = document.querySelector(".win");
+    let letters = document.querySelectorAll(".letter");
+    let shownLetters = document.querySelectorAll(".show");
+    let header = document.querySelector("#overlay .title");
 
+    if (letters.length === shownLetters.length) {
+        displayStartScreen.classList.add("win");
+        header.textContent = "You Won!";
+        displayStartScreen.style.display = "flex";
+    } else if (missed > 4) {
+        displayStartScreen.classList.add("lose");
+        header.textContent = "You Lost";
+        displayStartScreen.style.display = "flex";
+    }
+
+}
 
 
 
