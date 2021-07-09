@@ -162,10 +162,11 @@ keyboard.addEventListener('click', (e) => {
             //e.target.disabled = true;
 
         } if (letterFound === null) {
-            let scoreboard = document.querySelector("#scoreboard ol");
-            let li = scoreboard.querySelector("li");
-            let image = li.firstElementChild;
-            image.src = "images/lostHeart.png";
+
+            //let scoreboard = document.querySelector("#scoreboard ol");
+            //let li = scoreboard.querySelector("li");
+            let image = document.getElementsByTagName("IMG");
+            image[missed].src = "images/lostHeart.png";
             missed++;
         }
     }
