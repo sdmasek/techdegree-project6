@@ -99,7 +99,7 @@ const displayStartScreen = document.getElementById("overlay");
 let missed = 0;
 
 const phrases = [
-    "The quick brown fox jumps over the lazy dog",
+    "A Dime a Dozen",
     "An apple a day keeps the doctor away",
     "The early bird gets the worm",
     "Barking up the wrong tree",
@@ -164,9 +164,9 @@ keyboard.addEventListener('click', (e) => {
         } if (letterFound === null) {
             let scoreboard = document.querySelector("#scoreboard ol");
             let li = scoreboard.querySelector("li");
-            scoreboard.removeChild(li);
+            let image = li.firstElementChild;
+            image.src = "images/lostHeart.png";
             missed++;
-            // misses.textContent = missed;
         }
     }
     checkWin();
