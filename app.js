@@ -95,6 +95,7 @@ const phrase = document.getElementById("phrase");
 const letters = document.querySelectorAll('.letter');
 const scoreboard = document.querySelectorAll('#scoreboard .tries');
 const displayStartScreen = document.getElementById("overlay");
+const reset = document.createElement("button");
 
 let missed = 0;
 
@@ -133,6 +134,14 @@ const addPhraseToDisplay = arr => {
         }
     });
 }
+
+// const removePhraseFromDisplay = arr => {
+
+//     let listItems = document.getElementsByTagName("LI");
+//     listItems.style.display = "none";
+
+//     return arr;
+// }
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
 let lis = document.querySelectorAll("#phrase li");
@@ -163,8 +172,6 @@ keyboard.addEventListener('click', (e) => {
 
         } if (letterFound === null) {
 
-            //let scoreboard = document.querySelector("#scoreboard ol");
-            //let li = scoreboard.querySelector("li");
             let image = document.getElementsByTagName("IMG");
             image[missed].src = "images/lostHeart.png";
             missed++;
@@ -183,13 +190,45 @@ const checkWin = () => {
         displayStartScreen.classList.add("win");
         header.textContent = "You Won!";
         displayStartScreen.style.display = "flex";
+        Reset();
+
+
     } else if (missed > 4) {
         displayStartScreen.classList.add("lose");
         header.textContent = "You Lost";
         displayStartScreen.style.display = "flex";
+        Reset();
     }
 
 }
+
+const Reset = () => {
+    displayStartScreen.appendChild(reset);
+    let displayStartScreenNode = btnStart.parentNode;
+    reset.className = "btn_restart";
+    reset.textContent = "restart";
+    displayStartScreenNode.removeChild(btnStart);
+    let phraseLis = phrase.querySelectorAll("li");
+    for (let i = 0; i < phraseLis.length; i++) {
+        let ul = phrase.querySelector("ul");
+        ul.removeChild(phraseLis[i]);
+    }
+    let buttons = document.querySelectorAll(".keyrow button");
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].className === "chosen") {
+            buttons[i].classList.remove("chosen");
+        }
+    }
+}
+
+reset.addEventListener('click', (e) => {
+    missed = 0;
+    getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(phraseArray);
+
+    //addPhraseToDisplay(phraseArray);
+    displayStartScreen.style.display = "none";
+});
 
 
 
