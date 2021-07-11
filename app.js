@@ -135,19 +135,12 @@ const addPhraseToDisplay = arr => {
     });
 }
 
-// const removePhraseFromDisplay = arr => {
-
-//     let listItems = document.getElementsByTagName("LI");
-//     listItems.style.display = "none";
-
-//     return arr;
-// }
-const phraseArray = getRandomPhraseAsArray(phrases);
+let phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
-let lis = document.querySelectorAll("#phrase li");
+
 
 const checkLetter = (button) => {
-
+    let lis = document.querySelectorAll("#phrase li");
     let match = null;
     for (let i = 0; i < lis.length; i++) {
 
@@ -168,7 +161,7 @@ keyboard.addEventListener('click', (e) => {
         if (e.target.className !== "chosen") {
             // let letterFound = checkLetter(e.target.textContent.toLowerCase());
             e.target.className = "chosen";
-            //e.target.disabled = true;
+            e.target.disabled = true;
 
         } if (letterFound === null) {
 
@@ -209,6 +202,14 @@ const Reset = () => {
     reset.className = "btn_restart";
     reset.textContent = "restart";
     displayStartScreenNode.removeChild(btnStart);
+
+    let newButtons = document.getElementsByTagName("BUTTON");
+    for (let i = 0; i < newButtons.length; i++) {
+        if (newButtons[i].disabled = true) {
+            newButtons[i].disabled = false;
+        }
+    }
+
     let phraseLis = phrase.querySelectorAll("li");
     for (let i = 0; i < phraseLis.length; i++) {
         let ul = phrase.querySelector("ul");
@@ -220,16 +221,53 @@ const Reset = () => {
             buttons[i].classList.remove("chosen");
         }
     }
+    let heartIcons = document.querySelectorAll("#scoreboard li img");
+    for (let i = 0; i < heartIcons.length; i++) {
+        if (heartIcons[i].src = "images/lostHeart.png") {
+            heartIcons[i].src = "images/liveHeart.png";
+        }
+    }
+
+    if (displayStartScreen.className === "win") {
+        displayStartScreen.classList.remove("win");
+
+
+    } else if (displayStartScreen.className === "lose") {
+        displayStartScreen.classList.remove("lose");
+
+    }
+
+
 
 }
 
 reset.addEventListener('click', (e) => {
     missed = 0;
-    getRandomPhraseAsArray(phrases);
+    phraseArray = getRandomPhraseAsArray(phrases);
     addPhraseToDisplay(phraseArray);
 
     //addPhraseToDisplay(phraseArray);
     displayStartScreen.style.display = "none";
+
+    keyboard.addEventListener('click', (e) => {
+
+        //if you're pressing a button
+        if (e.target.tagName === "BUTTON") {
+            const letterFound = checkLetter(e.target.textContent.toLowerCase());
+            if (e.target.className !== "chosen") {
+                // let letterFound = checkLetter(e.target.textContent.toLowerCase());
+                e.target.className = "chosen";
+                e.target.disabled = true;
+
+            } if (letterFound === null) {
+
+                let image = document.getElementsByTagName("IMG");
+                image[missed].src = "images/lostHeart.png";
+                missed++;
+            }
+        }
+        checkWin();
+    });
 });
 
 
