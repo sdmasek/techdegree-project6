@@ -203,6 +203,7 @@ const checkWin = () => {
 }
 
 const Reset = () => {
+    //append the reset button to the display
     displayStartScreen.appendChild(reset);
     let displayStartScreenNode = btnStart.parentNode;
     reset.className = "btn_restart";
@@ -219,6 +220,7 @@ const Reset = () => {
             buttons[i].classList.remove("chosen");
         }
     }
+
 }
 
 reset.addEventListener('click', (e) => {
