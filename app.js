@@ -198,11 +198,9 @@ const checkWin = () => {
 const Reset = () => {
     //append the reset button to the display
     displayStartScreen.appendChild(reset);
-    let displayStartScreenNode = btnStart.parentNode;
     reset.className = "btn_restart";
     reset.textContent = "restart";
-    displayStartScreenNode.removeChild(btnStart);
-
+    btnStart.style.display = "none";
     let newButtons = document.getElementsByTagName("BUTTON");
     for (let i = 0; i < newButtons.length; i++) {
         if (newButtons[i].disabled = true) {
@@ -249,25 +247,25 @@ reset.addEventListener('click', (e) => {
     //addPhraseToDisplay(phraseArray);
     displayStartScreen.style.display = "none";
 
-    keyboard.addEventListener('click', (e) => {
+    // keyboard.addEventListener('click', (e) => {
 
-        //if you're pressing a button
-        if (e.target.tagName === "BUTTON") {
-            const letterFound = checkLetter(e.target.textContent.toLowerCase());
-            if (e.target.className !== "chosen") {
-                // let letterFound = checkLetter(e.target.textContent.toLowerCase());
-                e.target.className = "chosen";
-                e.target.disabled = true;
+    //     //if you're pressing a button
+    //     if (e.target.tagName === "BUTTON") {
+    //         const letterFound = checkLetter(e.target.textContent.toLowerCase());
+    //         if (e.target.className !== "chosen") {
+    //             // let letterFound = checkLetter(e.target.textContent.toLowerCase());
+    //             e.target.className = "chosen";
+    //             e.target.disabled = true;
 
-            } if (letterFound === null) {
+    //         } if (letterFound === null) {
 
-                let image = document.getElementsByTagName("IMG");
-                image[missed].src = "images/lostHeart.png";
-                missed++;
-            }
-        }
-        checkWin();
-    });
+    //             let image = document.getElementsByTagName("IMG");
+    //             image[missed].src = "images/lostHeart.png";
+    //             missed++;
+    //         }
+    //     }
+    //     checkWin();
+    // });
 });
 
 
