@@ -230,9 +230,11 @@ const Reset = () => {
         displayStartScreen.classList.remove("win");
 
 
-    } else if (displayStartScreen.className === "lose") {
-        displayStartScreen.classList.remove("lose");
+        // } else if (displayStartScreen.className === "lose") {
+        //     displayStartScreen.classList.remove("lose");
 
+    } else {
+        displayStartScreen.classList.remove("lose");
     }
 
 
